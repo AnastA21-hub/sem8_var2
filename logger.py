@@ -51,15 +51,37 @@ def option_file(): #функция выбора файла
 
   
 def redact_data(op, num):
-      
+    print('Выберете данные, которые хотите изменить:\n'
+          '1. Имя\n'
+          '2. Фамилия\n'
+          '3. Номер телефона\n'
+          '4. Адрес\n')
+    var = input('Введите число: ')  
     if op == 1:    
         with open('data_first_variant.csv', 'r', encoding='utf-8') as f: 
             data_first = f.read() #читаем все строки
             data_first_list = data_first.rstrip().split('\n\n')
-            old_data = input('Введите данные, которые хотите изменить: ')
-            new_data = input('Введите новые данные: ')
-            data_first_list[num - 1] = data_first_list[num - 1].replace(old_data, new_data)
-            new_data_first = '\n\n'.join(data_first_list)
+            for i in range(len(data_first_list)):
+                if i == num-1:
+                    contact_list = data_first_list[i].split() 
+                    match var: 
+                        case '1':
+                            contact_list[0] = name_data()
+                        case '2':
+                            contact_list[1] = surname_data()
+                        case '3':
+                            contact_list[2] = phone_data()
+                        case '4':
+                            contact_list[3] = address_data()
+                    contact_list = '\n'.join(contact_list)
+            if num == 1:
+                data_first_list.insert(0, contact_list)
+                data_first_list = data_first_list[:num]+data_first_list[num+1:]
+            elif num <= len(data_first_list):
+                i = num - 1
+                data_first_list.insert(i, contact_list)
+                data_first_list = data_first_list[:i+1]+data_first_list[i+2:]
+            new_data_first = '\n\n'.join(data_first_list)            
         with open('data_first_variant.csv', 'w', encoding='utf-8') as f:
             f.write(new_data_first)  
             
@@ -68,10 +90,28 @@ def redact_data(op, num):
         with open('data_second_variant.csv', 'r', encoding='utf-8') as f: 
             data_second = f.read()
             data_second_list = data_second.rstrip().split('\n')
-            old_data = input('Введите данные, которые хотите изменить: ')
-            new_data = input('Введите новые данные: ')
-            data_second_list[num - 1] = data_second_list[num - 1].replace(old_data, new_data)
-            new_data_second = '\n'.join(data_second_list)
+            for i in range(len(data_second_list)):
+                if i == num-1:
+                    contact_list = data_second_list[i].split(';') 
+                    match var: 
+                        case '1':
+                            contact_list[0] = name_data()
+                        case '2':
+                            contact_list[1] = surname_data()
+                        case '3':
+                            contact_list[2] = phone_data()
+                        case '4':
+                            contact_list[3] = address_data()
+                    contact_list = ';'.join(contact_list)
+                    
+            if num == 1:
+                data_second_list.insert(0, contact_list)
+                data_second_list = data_second_list[:num]+data_second_list[num+1:]
+            elif num <= len(data_second_list):
+                i = num - 1
+                data_second_list.insert(i, contact_list)
+                data_second_list = data_second_list[:i+1]+data_second_list[i+2:]
+            new_data_second = '\n'.join(data_second_list) 
         with open('data_second_variant.csv', 'w', encoding='utf-8') as f:
             f.write(new_data_second)
         
@@ -153,7 +193,7 @@ def search_data():
 
 
 
-#search_data()
+search_data()
 
 #redact_data()
 #delete_data()
@@ -166,21 +206,19 @@ def search_data():
 #           '3. Номер телефона\n'
 #           '4. Адрес\n')
 #     var = input('Введите число: ')
-#     match var:#действия после выбора варианта, math заменяет if или if-else 
-#             case '1':#пользователь выбрал вариант 1, тогда
-#                 name = name_data()
-#             case '2':#пользователь выбрал вариант 2, тогда
-#                 surname = surname_data()
-#             case '3':#пользователь выбрал вариант 3, тогда
-#                 phone = phone_data()
-#             case '4':
-#                 address = address_data()
+#     
               
 #     if op == 1:    
 #         with open('data_first_variant.csv', 'r', encoding='utf-8') as f: 
 #             data_first = f.read() #читаем все строки
 #             data_first_list = data_first.rstrip().split('\n\n')
-            
+#           
 
-
-
+# old_data = input('Введите данные, которые хотите изменить: ')
+#             new_data = input('Введите новые данные: ')
+#             data_first_list[num - 1] = data_first_list[num - 1].replace(old_data, new_data)
+#             new_data_first = '\n\n'.join(data_first_list)
+# old_data = input('Введите данные, которые хотите изменить: ')
+#             new_data = input('Введите новые данные: ')
+#             data_second_list[num - 1] = data_second_list[num - 1].replace(old_data, new_data)
+#             new_data_second = '\n'.join(data_second_list)
